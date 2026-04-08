@@ -1652,41 +1652,6 @@
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // ── WhatsApp orbital text : ajuste le rayon après chargement police
-  (function() {
-    var orbitSvg  = document.querySelector('.whatsapp-orbit');
-    var orbitPath = document.getElementById('wa-circle');
-    var textEl    = document.getElementById('wa-orbit-text');
-    if (!orbitSvg || !orbitPath || !textEl) return;
-
-    function fitOrbit() {
-      var tmp = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-      tmp.setAttribute('font-size',     textEl.getAttribute('font-size'));
-      tmp.setAttribute('font-family',   textEl.getAttribute('font-family'));
-      tmp.setAttribute('font-weight',   textEl.getAttribute('font-weight'));
-      tmp.setAttribute('letter-spacing',textEl.getAttribute('letter-spacing'));
-      tmp.setAttribute('x', '-9999');
-      tmp.textContent = document.getElementById('wa-orbit-path').textContent;
-      orbitSvg.appendChild(tmp);
-
-      var len = tmp.getComputedTextLength();
-      orbitSvg.removeChild(tmp);
-      if (!len) return;
-
-      var r = len / (2 * Math.PI);
-      var cx = 45, cy = 45;
-      orbitPath.setAttribute('d',
-        'M '+cx+','+cy+' m -'+r.toFixed(2)+',0'
-        +' a '+r.toFixed(2)+','+r.toFixed(2)+' 0 1,1 '+(2*r).toFixed(2)+',0'
-        +' a '+r.toFixed(2)+','+r.toFixed(2)+' 0 1,1 -'+(2*r).toFixed(2)+',0'
-      );
-    }
-
-    // Attendre que DM Sans soit chargée avant de mesurer
-    (document.fonts ? document.fonts.ready : Promise.resolve()).then(function() {
-      requestAnimationFrame(function() { requestAnimationFrame(fitOrbit); });
-    });
-  })();
 
   // ── Reviews carousel : reprise auto après touch sur mobile
   (function() {
@@ -1721,8 +1686,8 @@
     <defs>
       <path id="wa-circle" d="M 45,45 m -33,0 a 33,33 0 1,1 66,0 a 33,33 0 1,1 -66,0"/>
     </defs>
-    <text id="wa-orbit-text" font-size="7" fill="#25D366" font-family="DM Sans, sans-serif" font-weight="600" letter-spacing="1.5" opacity="1">
-      <textPath id="wa-orbit-path" href="#wa-circle">여보세요 · On vous répond vite ·</textPath>
+    <text font-size="7" fill="#25D366" font-family="DM Sans, sans-serif" font-weight="600" letter-spacing="3.1" opacity="1">
+      <textPath href="#wa-circle">여보세요 · On vous répond vite ·</textPath>
     </text>
   </svg>
 </div>
