@@ -184,6 +184,12 @@
       width: clamp(360px, 52vw, 680px);
       will-change: transform, filter;
     }
+    /* Mobile : fixed dès le départ → root stacking context, toujours au-dessus de la navbar */
+    @media (max-width: 768px) {
+      .hero-logo-center {
+        position: fixed;
+      }
+    }
     /* Logo navbar placeholder — invisible, réserve l'espace layout */
     #navbar-logo { opacity: 0; pointer-events: none; display: block; }
     #navbar-logo.visible { opacity: 1; pointer-events: auto; }
@@ -1326,8 +1332,8 @@
     // Centre du logo hero dans le viewport (sans transformation)
     const hR = heroLogoImg.getBoundingClientRect();
     heroStart = { x: hR.left + hR.width / 2, y: hR.top + hR.height / 2 };
-    // Centre du logo dans la navbar
-    const nR = navbarLogo.getBoundingClientRect();
+    // Centre du logo dans la navbar — mesuré sur l'img pour précision pixel
+    const nR = navbarLogoImg.getBoundingClientRect();
     navDest = { x: nR.left + nR.width / 2, y: nR.top + nR.height / 2 };
   }
   measureLogos();
@@ -1357,25 +1363,17 @@
     const p   = ease(raw);
 
     if (isMobile()) {
-      // ── MOBILE : logo glisse directement du centre vers la navbar
-      // Swap instantané à raw=1 (les deux logos sont au même endroit → aucun gap visible)
-      if (raw >= 1) {
-        heroLogoCenter.style.display = 'none';
-        navLogoFly.style.opacity = '0';
-        navbarLogo.classList.add('visible');
-      } else {
-        heroLogoCenter.style.display = 'flex';
-        navbarLogo.classList.remove('visible');
-        navLogoFly.style.opacity = '0';
-
-        const tx = (navDest.x - heroStart.x) * p;
-        const ty = (navDest.y - heroStart.y) * p;
-        const scale = 1 - p * (1 - targetScale);
-        heroLogoCenter.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
-
-        const sh = 1 - p;
-        heroLogoImg.style.filter = `drop-shadow(0 ${8*sh}px ${32*sh}px rgba(0,0,0,${0.45*sh}))`;
-      }
+      // ── MOBILE : hero-logo-center IS le logo navbar — un seul élément, position: fixed
+      // Pas de swap : à raw=1 on freeze le transform, l'élément reste visible en navbar
+      navLogoFly.style.opacity = '0';
+      const tx = (navDest.x - heroStart.x) * Math.min(p, 1);
+      const ty = (navDest.y - heroStart.y) * Math.min(p, 1);
+      const scale = 1 - Math.min(p, 1) * (1 - targetScale);
+      heroLogoCenter.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+      const sh = 1 - Math.min(raw, 1);
+      heroLogoImg.style.filter = sh > 0
+        ? `drop-shadow(0 ${8*sh}px ${32*sh}px rgba(0,0,0,${0.45*sh}))`
+        : '';
 
     } else {
       // ── DESKTOP : animation 2 phases originale
