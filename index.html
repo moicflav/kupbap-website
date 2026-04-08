@@ -44,7 +44,7 @@
       --gray: #9A9A9A;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; width: 100%; max-width: 100%; overflow-x: hidden; }
+    html { scroll-behavior: smooth; width: 100%; max-width: 100%; overflow-x: clip; }
     body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; width: 100%; max-width: 100%; }
     .font-display { font-family: 'Intro Rust', sans-serif; letter-spacing: 0.02em; }
 
@@ -183,9 +183,13 @@
     }
     .hero-logo-center img {
       display: block;
-      width: clamp(200px, 52vw, 680px);
-      max-width: 80vw;
+      width: clamp(360px, 52vw, 680px);
       will-change: transform, filter;
+    }
+    @media (max-width: 768px) {
+      .hero-logo-center img {
+        width: 80vw; /* taille maximale sans overflow sur mobile */
+      }
     }
     /* Logo navbar placeholder — invisible, réserve l'espace layout */
     #navbar-logo { opacity: 0; pointer-events: none; display: block; }
