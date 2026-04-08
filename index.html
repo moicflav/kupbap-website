@@ -268,6 +268,41 @@
     .wave-wrap { line-height: 0; overflow: hidden; margin-bottom: -4px; }
     .wave { display: block; width: 100%; line-height: 0; transform-origin: center bottom; }
 
+    /* ── BOUTON WHATSAPP FLOTTANT ── */
+    .whatsapp-fab {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+      width: 56px; height: 56px;
+      display: flex; align-items: center; justify-content: center;
+      background: #25D366;
+      border-radius: 50%;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.45), 0 2px 6px rgba(0,0,0,0.15);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+    }
+    .whatsapp-fab:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.55), 0 4px 10px rgba(0,0,0,0.18);
+    }
+    .whatsapp-fab:active { transform: scale(0.96); }
+    .whatsapp-fab img { width: 32px; height: 32px; display: block; }
+    /* Bulle tooltip */
+    .whatsapp-fab::before {
+      content: 'Une question ?';
+      position: absolute; right: calc(100% + 10px); top: 50%; transform: translateY(-50%);
+      background: var(--dark); color: white;
+      font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 500;
+      padding: 0.35rem 0.75rem; border-radius: 6px; white-space: nowrap;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .whatsapp-fab:hover::before { opacity: 1; }
+    /* Pulse discret pour attirer l'attention */
+    @keyframes wa-pulse {
+      0%, 100% { box-shadow: 0 4px 16px rgba(37,211,102,0.45), 0 2px 6px rgba(0,0,0,0.15); }
+      50%       { box-shadow: 0 4px 24px rgba(37,211,102,0.7),  0 2px 6px rgba(0,0,0,0.15); }
+    }
+    .whatsapp-fab { animation: wa-pulse 3s ease-in-out infinite; }
+
     /* ── SECTIONS ── */
     .section-label {
       font-size: 0.7rem; font-weight: 700; letter-spacing: 0.22em;
@@ -1610,5 +1645,12 @@
     }, { passive: true });
   })();
 </script>
+
+<!-- ════════════════════ BOUTON WHATSAPP FLOTTANT ════════════════════ -->
+<a href="https://wa.me/14155238886" target="_blank" rel="noopener noreferrer"
+   class="whatsapp-fab" aria-label="Nous contacter sur WhatsApp">
+  <img src="Kupbap_brand_assets/Logo/logo_whatsapp.svg" alt="WhatsApp">
+</a>
+
 </body>
 </html>
