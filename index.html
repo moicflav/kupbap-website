@@ -1652,6 +1652,44 @@
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+  // ── WhatsApp orbital text : ajuste le rayon pour fermer la boucle exactement
+  (function() {
+    var orbitSvg  = document.querySelector('.whatsapp-orbit');
+    var orbitPath = document.getElementById('wa-circle');
+    var textEl    = document.getElementById('wa-orbit-text');
+    if (!orbitSvg || !orbitPath || !textEl) return;
+
+    function fitOrbit() {
+      // Mesure la longueur naturelle du texte avec un élément temporaire (hors textPath)
+      var tmp = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      tmp.setAttribute('font-size',     textEl.getAttribute('font-size'));
+      tmp.setAttribute('font-family',   textEl.getAttribute('font-family'));
+      tmp.setAttribute('font-weight',   textEl.getAttribute('font-weight'));
+      tmp.setAttribute('letter-spacing',textEl.getAttribute('letter-spacing'));
+      tmp.textContent = document.getElementById('wa-orbit-path').textContent;
+      tmp.style.visibility = 'hidden';
+      orbitSvg.appendChild(tmp);
+
+      var len = tmp.getComputedTextLength();
+      orbitSvg.removeChild(tmp);
+      if (!len) return;
+
+      // Rayon exact pour que le texte fasse exactement un tour
+      var r  = len / (2 * Math.PI);
+      var cx = 45, cy = 45;
+      orbitPath.setAttribute('d',
+        'M '+cx+','+cy+' m -'+r.toFixed(2)+',0'
+        +' a '+r.toFixed(2)+','+r.toFixed(2)+' 0 1,1 '+(2*r).toFixed(2)+',0'
+        +' a '+r.toFixed(2)+','+r.toFixed(2)+' 0 1,1 -'+(2*r).toFixed(2)+',0'
+      );
+    }
+
+    // Deux rAF pour s'assurer que les polices sont chargées
+    requestAnimationFrame(function() { requestAnimationFrame(fitOrbit); });
+    // Recalcule aussi après chargement complet (polices web)
+    window.addEventListener('load', fitOrbit);
+  })();
+
   // ── Reviews carousel : reprise auto après touch sur mobile
   (function() {
     const track = document.querySelector('.reviews-track');
@@ -1685,8 +1723,8 @@
     <defs>
       <path id="wa-circle" d="M 45,45 m -33,0 a 33,33 0 1,1 66,0 a 33,33 0 1,1 -66,0"/>
     </defs>
-    <text font-size="7" fill="#25D366" font-family="DM Sans, sans-serif" font-weight="600" letter-spacing="2.1" opacity="1">
-      <textPath href="#wa-circle">여보세요 · On vous répond vite ·</textPath>
+    <text id="wa-orbit-text" font-size="7" fill="#25D366" font-family="DM Sans, sans-serif" font-weight="600" letter-spacing="1.5" opacity="1">
+      <textPath id="wa-orbit-path" href="#wa-circle">여보세요 · On vous répond vite ·</textPath>
     </text>
   </svg>
 </div>
