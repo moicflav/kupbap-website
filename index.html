@@ -952,43 +952,43 @@
 
     <!-- Card 1 — 2Z #4 · from top-left -->
     <div class="kpol" data-from="top-left" style="--tx:-370px;--ty:10px;--r:-14deg;--delay:0s;--zi:2">
-      <img src="Kupbap_brand_assets/koreo/2Z_4.jpeg" loading="lazy" alt="Groupe Kpop 2Z chez KUPBAP">
+      <img src="Kupbap_brand_assets/koreo/2Z_4.jpeg" alt="Groupe Kpop 2Z chez KUPBAP">
       <span>2Z</span>
     </div>
 
     <!-- Card 2 — Tribe · from left -->
     <div class="kpol" data-from="left" style="--tx:-220px;--ty:-50px;--r:9deg;--delay:0.12s;--zi:3">
-      <img src="Kupbap_brand_assets/koreo/tribe.png" loading="lazy" alt="Groupe Kpop Tribe chez KUPBAP">
+      <img src="Kupbap_brand_assets/koreo/tribe.png" alt="Groupe Kpop Tribe chez KUPBAP">
       <span>Tribe</span>
     </div>
 
     <!-- Card 3 — 2Z #3 · from bottom -->
     <div class="kpol" data-from="bottom" style="--tx:-110px;--ty:80px;--r:-5deg;--delay:0.22s;--zi:6">
-      <img src="Kupbap_brand_assets/koreo/2Z_3.jpeg" loading="lazy" alt="Groupe Kpop 2Z chez KUPBAP">
+      <img src="Kupbap_brand_assets/koreo/2Z_3.jpeg" alt="Groupe Kpop 2Z chez KUPBAP">
       <span>2Z</span>
     </div>
 
     <!-- Card 4 — 2Z #2 · from top-right -->
     <div class="kpol" data-from="top-right" style="--tx:20px;--ty:-55px;--r:5deg;--delay:0.08s;--zi:4">
-      <img src="Kupbap_brand_assets/koreo/2Z_2.jpeg" loading="lazy" alt="Groupe Kpop 2Z chez KUPBAP">
+      <img src="Kupbap_brand_assets/koreo/2Z_2.jpeg" alt="Groupe Kpop 2Z chez KUPBAP">
       <span>2Z</span>
     </div>
 
     <!-- Card 5 — Kisu · from top -->
     <div class="kpol" data-from="top" style="--tx:140px;--ty:-30px;--r:11deg;--delay:0.18s;--zi:5">
-      <img src="Kupbap_brand_assets/koreo/Kisu_2.jpg" loading="lazy" alt="Kisu artiste Kpop chez KUPBAP">
+      <img src="Kupbap_brand_assets/koreo/Kisu_2.jpg" alt="Kisu artiste Kpop chez KUPBAP">
       <span>Kisu</span>
     </div>
 
     <!-- Card 6 — Kisu #1 · from bottom-right -->
     <div class="kpol" data-from="right" style="--tx:250px;--ty:50px;--r:-10deg;--delay:0.30s;--zi:7">
-      <img src="Kupbap_brand_assets/koreo/Kisu_1.jpg" loading="lazy" alt="Kisu artiste Kpop chez KUPBAP">
+      <img src="Kupbap_brand_assets/koreo/Kisu_1.jpg" alt="Kisu artiste Kpop chez KUPBAP">
       <span>Kisu</span>
     </div>
 
     <!-- Card 7 — Startseedz · from bottom -->
     <div class="kpol" data-from="bottom" style="--tx:370px;--ty:-20px;--r:7deg;--delay:0.38s;--zi:5">
-      <img src="Kupbap_brand_assets/koreo/startseedz.jpg" loading="lazy" alt="Groupe Kpop Startseedz chez KUPBAP">
+      <img src="Kupbap_brand_assets/koreo/startseedz.jpg" alt="Groupe Kpop Startseedz chez KUPBAP">
       <span>Startseedz</span>
     </div>
 
@@ -1160,6 +1160,7 @@
       transform 1.3s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s),
       opacity 0.7s ease var(--delay, 0s);
     cursor: default;
+    will-change: transform, opacity;
   }
 
   /* Landed state — triggered by JS adding .landed to arena */
@@ -1298,14 +1299,34 @@
 (function() {
   var arena = document.getElementById('scatterArena');
   if (!arena) return;
+
+  function triggerLanded() {
+    arena.classList.add('landed');
+  }
+
+  // Attend que toutes les images de la section soient chargées avant d'animer
+  function waitForImagesAndLand() {
+    var imgs = Array.from(arena.querySelectorAll('img'));
+    var pending = imgs.filter(function(img) { return !img.complete; });
+    if (pending.length === 0) {
+      triggerLanded();
+    } else {
+      var loaded = 0;
+      pending.forEach(function(img) {
+        img.addEventListener('load',  function() { if (++loaded === pending.length) triggerLanded(); });
+        img.addEventListener('error', function() { if (++loaded === pending.length) triggerLanded(); });
+      });
+    }
+  }
+
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
-        arena.classList.add('landed');
         observer.disconnect();
+        waitForImagesAndLand();
       }
     });
-  }, { threshold: 0.25 });
+  }, { threshold: 0.15 });
   observer.observe(arena);
 })();
 </script>
