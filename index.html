@@ -45,7 +45,7 @@
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; width: 100%; max-width: 100%; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; width: 100%; max-width: 100%; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; overscroll-behavior-x: none; width: 100%; max-width: 100%; }
     .font-display { font-family: 'Intro Rust', sans-serif; letter-spacing: 0.02em; }
 
     /* ── NAV ── */
@@ -1325,17 +1325,18 @@
   let heroStart = { x: 0, y: 0 };
 
   function measureLogos() {
-    // Reset transform pour mesurer la vraie position initiale
     heroLogoCenter.style.transform = '';
     const heroH = heroLogoImg.offsetHeight;
     const navH  = navbarLogoImg.offsetHeight || 24;
     if (heroH > 0) targetScale = navH / heroH;
-    // Centre du logo hero dans le viewport (sans transformation)
-    const hR = heroLogoImg.getBoundingClientRect();
-    heroStart = { x: hR.left + hR.width / 2, y: hR.top + hR.height / 2 };
-    // Centre du logo dans la navbar — mesuré sur l'img pour précision pixel
-    const nR = navbarLogoImg.getBoundingClientRect();
-    navDest = { x: nR.left + nR.width / 2, y: nR.top + nR.height / 2 };
+
+    // heroStart : le logo hero est centré via flex dans inset:0 → toujours centre du viewport
+    heroStart = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+    // navDest : fallback ratio SVG (1500/200 = 7.5) si image pas encore chargée
+    const navLogoW = navbarLogoImg.offsetWidth || navH * 7.5;
+    const nL = navbarLogo.getBoundingClientRect();
+    navDest = { x: nL.left + navLogoW / 2, y: nL.top + navH / 2 };
   }
   measureLogos();
   window.addEventListener('load', () => {
@@ -1449,6 +1450,13 @@
       if (r.top < navBottom && r.bottom > 0) isDark = true;
     });
     navbar.classList.toggle('nav-dark', isDark);
+
+    // Mobile : #navbar-logo est invisible, le logo visible est #hero-logo-center img
+    if (isMobile() && window.scrollY >= ANIM_SCROLL) {
+      heroLogoImg.style.filter = isDark
+        ? 'brightness(0) saturate(100%) invert(19%) sepia(82%) saturate(800%) hue-rotate(197deg) brightness(75%)'
+        : '';
+    }
   }
 
   window.addEventListener('scroll', updateNavState, { passive: true });
