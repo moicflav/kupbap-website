@@ -1437,27 +1437,22 @@
   window.addEventListener('scroll', updateHeroIntro, { passive: true });
 
   // ── Nav scroll + détection fond clair/foncé
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 60);
-  }, { passive: true });
-
-  // IntersectionObserver : zone = fine bande à la hauteur de la navbar (~70px depuis le top)
-  const navH = navbar.offsetHeight + 30;
   const lightSections = document.querySelectorAll('[data-nav-theme="light"]');
-  let lightCount = 0; // nb de sections claires actuellement intersectant la navbar
 
-  const navThemeObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      lightCount += e.isIntersecting ? 1 : -1;
-      lightCount = Math.max(0, lightCount);
+  function updateNavState() {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+    // Détection fond clair : la navbar chevauche-t-elle une section claire ?
+    const navBottom = navbar.getBoundingClientRect().bottom;
+    let isDark = false;
+    lightSections.forEach(s => {
+      const r = s.getBoundingClientRect();
+      if (r.top < navBottom && r.bottom > 0) isDark = true;
     });
-    navbar.classList.toggle('nav-dark', lightCount > 0);
-  }, {
-    rootMargin: `-${navH}px 0px -${window.innerHeight - navH - 2}px 0px`,
-    threshold: 0
-  });
+    navbar.classList.toggle('nav-dark', isDark);
+  }
 
-  lightSections.forEach(s => navThemeObserver.observe(s));
+  window.addEventListener('scroll', updateNavState, { passive: true });
+  updateNavState();
 
   // ── Hangeul parallax (couche fond se décale légèrement vs titre)
   const hangeulBgs = document.querySelectorAll('.hangeul-bg');
