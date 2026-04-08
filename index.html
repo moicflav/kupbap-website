@@ -467,12 +467,10 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .desktop-nav { display: none !important; }
-      /* Hero mobile : overflow visible pour que le contenu ne soit pas clippé */
       .hero {
         --hero-gap: clamp(1.25rem, 3vh, 2rem);
         min-height: 100vh; min-height: 100svh;
         align-items: flex-start;
-        overflow: visible;
       }
       .hero-content {
         padding-top: calc(4.5rem + var(--hero-gap));
@@ -1324,6 +1322,8 @@
   let navDest  = { x: 0, y: 0 };
   let heroStart = { x: 0, y: 0 };
 
+  const isMobile = () => window.innerWidth <= 768;
+
   function measureLogos() {
     heroLogoCenter.style.transform = '';
     const heroH = heroLogoImg.offsetHeight;
@@ -1333,10 +1333,16 @@
     // heroStart : le logo hero est centré via flex dans inset:0 → toujours centre du viewport
     heroStart = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
-    // navDest : fallback ratio SVG (1500/200 = 7.5) si image pas encore chargée
-    const navLogoW = navbarLogoImg.offsetWidth || navH * 7.5;
-    const nL = navbarLogo.getBoundingClientRect();
-    navDest = { x: nL.left + navLogoW / 2, y: nL.top + navH / 2 };
+    const navRect = navbar.getBoundingClientRect();
+    if (isMobile()) {
+      // Mobile : logo centré horizontalement dans la navbar (élément unique, pas de swap)
+      navDest = { x: window.innerWidth / 2, y: navRect.top + navRect.height / 2 };
+    } else {
+      // Desktop : cible le centre exact du #navbar-logo
+      const navLogoW = navbarLogoImg.offsetWidth || navH * 7.5;
+      const nL = navbarLogo.getBoundingClientRect();
+      navDest = { x: nL.left + navLogoW / 2, y: nL.top + navH / 2 };
+    }
   }
   measureLogos();
   window.addEventListener('load', () => {
@@ -1360,8 +1366,6 @@
 
   function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
   function clamp01(v) { return Math.min(1, Math.max(0, v)); }
-
-  const isMobile = () => window.innerWidth <= 768;
 
   function updateHeroIntro() {
     const raw = Math.min(1, window.scrollY / ANIM_SCROLL);
