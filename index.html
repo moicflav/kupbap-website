@@ -459,11 +459,12 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .desktop-nav { display: none !important; }
-      /* Hero mobile : grandit pour contenir tout le contenu, minimum 100svh */
+      /* Hero mobile : overflow visible pour que le contenu ne soit pas clippé */
       .hero {
         --hero-gap: clamp(1.25rem, 3vh, 2rem);
         min-height: 100vh; min-height: 100svh;
         align-items: flex-start;
+        overflow: visible;
       }
       .hero-content {
         padding-top: calc(4.5rem + var(--hero-gap));
