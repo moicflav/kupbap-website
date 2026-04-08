@@ -185,6 +185,7 @@
       position: absolute; inset: 0; z-index: 101;
       display: flex; align-items: center; justify-content: center;
       pointer-events: none;
+      transition: opacity 0.4s ease;
     }
     .hero-logo-center img {
       width: clamp(360px, 52vw, 680px);
@@ -1302,6 +1303,7 @@
 
 <script>
   // ── Hero intro animation (logo centré → navbar au scroll)
+  const navbar         = document.getElementById('navbar');
   const heroLogoCenter = document.getElementById('hero-logo-center');
   const heroLogoImg    = heroLogoCenter.querySelector('img');
   const heroContent    = document.getElementById('hero-content');
@@ -1363,14 +1365,19 @@
     if (isMobile()) {
       // ── MOBILE : logo glisse directement du centre vers la navbar
       if (raw >= 1) {
-        heroLogoCenter.style.display = 'none';
+        // Cross-fade : heroLogo s'efface, navbar apparaît simultanément
+        heroLogoCenter.style.opacity = '0';
+        heroLogoCenter.style.pointerEvents = 'none';
         navLogoFly.style.opacity = '0';
         navbarLogo.classList.add('visible');
-        // Navbar apparaît en fondu après que le logo soit arrivé
         navbar.classList.remove('logo-animating');
         navbar.classList.add('logo-arrived');
+        // Masquer complètement après la transition
+        setTimeout(() => { heroLogoCenter.style.display = 'none'; }, 420);
       } else {
         heroLogoCenter.style.display = 'flex';
+        heroLogoCenter.style.opacity = '1';
+        heroLogoCenter.style.pointerEvents = '';
         navbarLogo.classList.remove('visible');
         navLogoFly.style.opacity = '0';
         // Navbar cachée pendant l'animation
@@ -1446,7 +1453,6 @@
   window.addEventListener('scroll', updateHeroIntro, { passive: true });
 
   // ── Nav scroll + détection fond clair/foncé
-  const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
