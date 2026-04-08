@@ -1502,14 +1502,18 @@
     // ── Scroll hint
     heroScrollHint.style.opacity = String(Math.max(0, 1 - raw * 5));
 
-    // ── Bouton WhatsApp : apparaît quand le logo est arrivé dans la navbar
-    if (whatsappWrap) whatsappWrap.classList.toggle('visible', raw >= 1);
+    // ── Bouton WhatsApp : apparaît quand le logo est arrivé dans la navbar (one-way)
+    if (whatsappWrap && raw >= 1) whatsappWrap.classList.add('visible');
+
   }
 
   // État initial — animation active sur tous les écrans
   heroContent.style.opacity = '0';
   updateHeroIntro();
   window.addEventListener('scroll', updateHeroIntro, { passive: true });
+
+  // Fallback : affiche le bouton WhatsApp après 4s si l'utilisateur ne scrolle pas
+  if (whatsappWrap) setTimeout(() => whatsappWrap.classList.add('visible'), 4000);
 
   // ── Nav scroll + détection fond clair/foncé
   const lightSections = document.querySelectorAll('[data-nav-theme="light"]');
