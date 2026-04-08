@@ -269,8 +269,12 @@
     .wave { display: block; width: 100%; line-height: 0; transform-origin: center bottom; }
 
     /* ── BOUTON WHATSAPP FLOTTANT ── */
+    .whatsapp-wrap {
+      position: fixed; bottom: 1.1rem; right: 1.1rem; z-index: 200;
+      width: 100px; height: 100px;
+      display: flex; align-items: center; justify-content: center;
+    }
     .whatsapp-fab {
-      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
       width: 56px; height: 56px;
       display: flex; align-items: center; justify-content: center;
       background: #25D366;
@@ -278,6 +282,8 @@
       box-shadow: 0 4px 16px rgba(37,211,102,0.45), 0 2px 6px rgba(0,0,0,0.15);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       text-decoration: none;
+      animation: wa-pulse 3s ease-in-out infinite;
+      position: relative; z-index: 1;
     }
     .whatsapp-fab:hover {
       transform: scale(1.08);
@@ -285,23 +291,22 @@
     }
     .whatsapp-fab:active { transform: scale(0.96); }
     .whatsapp-fab svg { display: block; }
-    /* Bulle tooltip */
-    .whatsapp-fab::before {
-      content: 'Une question ?';
-      position: absolute; right: calc(100% + 10px); top: 50%; transform: translateY(-50%);
-      background: var(--dark); color: white;
-      font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 500;
-      padding: 0.35rem 0.75rem; border-radius: 6px; white-space: nowrap;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.2s ease;
+    /* Texte orbital */
+    .whatsapp-orbit {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      animation: orbit-spin 14s linear infinite;
+      transform-origin: center;
     }
-    .whatsapp-fab:hover::before { opacity: 1; }
-    /* Pulse discret pour attirer l'attention */
+    @keyframes orbit-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    /* Pulse discret */
     @keyframes wa-pulse {
       0%, 100% { box-shadow: 0 4px 16px rgba(37,211,102,0.45), 0 2px 6px rgba(0,0,0,0.15); }
       50%       { box-shadow: 0 4px 24px rgba(37,211,102,0.7),  0 2px 6px rgba(0,0,0,0.15); }
     }
-    .whatsapp-fab { animation: wa-pulse 3s ease-in-out infinite; }
 
     /* ── SECTIONS ── */
     .section-label {
@@ -1668,12 +1673,23 @@
 </script>
 
 <!-- ════════════════════ BOUTON WHATSAPP FLOTTANT ════════════════════ -->
-<a href="https://wa.me/14155238886" target="_blank" rel="noopener noreferrer"
-   class="whatsapp-fab" aria-label="Nous contacter sur WhatsApp">
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M16 2C8.268 2 2 8.268 2 16c0 2.417.632 4.687 1.74 6.655L2 30l7.545-1.717A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.6a11.56 11.56 0 01-5.857-1.591l-.42-.249-4.478 1.02.998-4.358-.274-.447A11.561 11.561 0 014.4 16C4.4 9.594 9.594 4.4 16 4.4S27.6 9.594 27.6 16 22.406 27.6 16 27.6zm6.344-8.636c-.347-.174-2.055-1.013-2.375-1.128-.319-.115-.551-.174-.783.174-.232.347-.9 1.128-1.103 1.36-.203.232-.406.26-.753.087-.347-.174-1.464-.54-2.789-1.72-1.03-.919-1.725-2.053-1.928-2.4-.203-.347-.022-.535.153-.708.157-.156.347-.406.52-.61.174-.202.232-.347.347-.579.116-.232.058-.434-.029-.608-.087-.174-.783-1.888-1.073-2.585-.282-.68-.569-.587-.783-.598l-.667-.011c-.232 0-.608.087-.927.434s-1.218 1.19-1.218 2.903 1.247 3.366 1.42 3.598c.174.232 2.453 3.745 5.942 5.252.83.359 1.478.573 1.983.733.833.265 1.592.228 2.19.138.668-.1 2.055-.84 2.346-1.651.29-.811.29-1.506.203-1.651-.087-.145-.318-.232-.666-.406z" fill="white"/>
+<div class="whatsapp-wrap">
+  <a href="https://wa.me/14155238886" target="_blank" rel="noopener noreferrer"
+     class="whatsapp-fab" aria-label="Nous contacter sur WhatsApp">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M16 2C8.268 2 2 8.268 2 16c0 2.417.632 4.687 1.74 6.655L2 30l7.545-1.717A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.6a11.56 11.56 0 01-5.857-1.591l-.42-.249-4.478 1.02.998-4.358-.274-.447A11.561 11.561 0 014.4 16C4.4 9.594 9.594 4.4 16 4.4S27.6 9.594 27.6 16 22.406 27.6 16 27.6zm6.344-8.636c-.347-.174-2.055-1.013-2.375-1.128-.319-.115-.551-.174-.783.174-.232.347-.9 1.128-1.103 1.36-.203.232-.406.26-.753.087-.347-.174-1.464-.54-2.789-1.72-1.03-.919-1.725-2.053-1.928-2.4-.203-.347-.022-.535.153-.708.157-.156.347-.406.52-.61.174-.202.232-.347.347-.579.116-.232.058-.434-.029-.608-.087-.174-.783-1.888-1.073-2.585-.282-.68-.569-.587-.783-.598l-.667-.011c-.232 0-.608.087-.927.434s-1.218 1.19-1.218 2.903 1.247 3.366 1.42 3.598c.174.232 2.453 3.745 5.942 5.252.83.359 1.478.573 1.983.733.833.265 1.592.228 2.19.138.668-.1 2.055-.84 2.346-1.651.29-.811.29-1.506.203-1.651-.087-.145-.318-.232-.666-.406z" fill="white"/>
+    </svg>
+  </a>
+  <!-- Texte orbital -->
+  <svg class="whatsapp-orbit" viewBox="0 0 100 100" aria-hidden="true">
+    <defs>
+      <path id="wa-circle" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/>
+    </defs>
+    <text font-size="7.2" fill="white" font-family="DM Sans, sans-serif" font-weight="600" letter-spacing="0.5" opacity="0.9">
+      <textPath href="#wa-circle">Parlez-nous, on adore ça 🇰🇷 · Parlez-nous, on adore ça 🇰🇷 · </textPath>
+    </text>
   </svg>
-</a>
+</div>
 
 </body>
 </html>
