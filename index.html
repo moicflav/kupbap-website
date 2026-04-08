@@ -175,23 +175,20 @@
     }
 
     /* ── HERO LOGO CENTRÉ ── */
+    /* Direct child of body → toujours dans le root stacking context (z-index 101 réel) */
     .hero-logo-center {
-      position: absolute; inset: 0; z-index: 101;
+      position: fixed; inset: 0; z-index: 101;
       display: flex; align-items: center; justify-content: center;
       pointer-events: none;
+      overflow: hidden;
     }
     .hero-logo-center img {
-      width: clamp(360px, 52vw, 680px);
+      width: clamp(200px, 52vw, 680px);
       will-change: transform, filter;
     }
-    /* Mobile : fixed dès le départ → root stacking context, toujours au-dessus de la navbar */
     @media (max-width: 768px) {
-      .hero-logo-center {
-        position: fixed;
-        overflow: hidden; /* évite le scroll horizontal causé par le grand logo */
-      }
       .hero-logo-center img {
-        width: min(80vw, 340px); /* ne déborde jamais du viewport */
+        width: min(80vw, 340px);
       }
     }
     /* Logo navbar placeholder — invisible, réserve l'espace layout */
@@ -527,6 +524,11 @@
 </head>
 <body>
 
+<!-- Logo animé hero → navbar : direct child of body → root stacking context garanti -->
+<div class="hero-logo-center" id="hero-logo-center">
+  <img src="Kupbap_brand_assets/Logo/logo.svg" alt="KUPBAP — Korean Food in a Cup">
+</div>
+
 <!-- ════════════════════ NAV ════════════════════ -->
 <nav id="navbar">
   <div class="nav-inner">
@@ -579,11 +581,6 @@
     <div class="hero-overlay-flat"></div>
     <div class="hero-overlay-gradient"></div>
     <div class="hero-grain"></div>
-  </div>
-
-  <!-- Logo centré au chargement -->
-  <div class="hero-logo-center" id="hero-logo-center">
-    <img src="Kupbap_brand_assets/Logo/logo.svg" alt="KUPBAP — Korean Food in a Cup">
   </div>
 
   <div class="hero-content" id="hero-content">
