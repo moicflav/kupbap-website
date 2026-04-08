@@ -44,7 +44,7 @@
       --gray: #9A9A9A;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; width: 100%; max-width: 100%; }
+    html { scroll-behavior: smooth; width: 100%; max-width: 100%; overflow-x: hidden; }
     body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; width: 100%; max-width: 100%; }
     .font-display { font-family: 'Intro Rust', sans-serif; letter-spacing: 0.02em; }
 
@@ -180,16 +180,12 @@
       position: fixed; inset: 0; z-index: 101;
       display: flex; align-items: center; justify-content: center;
       pointer-events: none;
-      overflow: hidden;
     }
     .hero-logo-center img {
+      display: block;
       width: clamp(200px, 52vw, 680px);
+      max-width: 80vw;
       will-change: transform, filter;
-    }
-    @media (max-width: 768px) {
-      .hero-logo-center img {
-        width: min(80vw, 340px);
-      }
     }
     /* Logo navbar placeholder — invisible, réserve l'espace layout */
     #navbar-logo { opacity: 0; pointer-events: none; display: block; }
@@ -1338,7 +1334,10 @@
     navDest = { x: nR.left + nR.width / 2, y: nR.top + nR.height / 2 };
   }
   measureLogos();
-  window.addEventListener('load', measureLogos);
+  window.addEventListener('load', () => {
+    measureLogos();    // Re-mesure avec SVG chargé (dimensions réelles)
+    updateHeroIntro(); // Recalcule le transform avec les bonnes valeurs
+  });
 
   // Ajuste la hauteur du wrapper selon la hauteur réelle du contenu hero
   function fixHeroWrapper() {
