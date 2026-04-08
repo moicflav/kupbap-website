@@ -1375,7 +1375,7 @@
 <script>
   // ── Hero intro animation (logo centré → navbar au scroll)
   const navbar         = document.getElementById('navbar');
-  const whatsappWrap   = document.querySelector('.whatsapp-wrap');
+  let whatsappWrap     = null; // résolu après chargement DOM complet
   const heroLogoCenter = document.getElementById('hero-logo-center');
   const heroLogoImg    = heroLogoCenter.querySelector('img');
   const heroContent    = document.getElementById('hero-content');
@@ -1512,8 +1512,17 @@
   updateHeroIntro();
   window.addEventListener('scroll', updateHeroIntro, { passive: true });
 
-  // Fallback : affiche le bouton WhatsApp après 4s si l'utilisateur ne scrolle pas
-  if (whatsappWrap) setTimeout(() => whatsappWrap.classList.add('visible'), 4000);
+  // Résolution du bouton WhatsApp après chargement complet du DOM
+  window.addEventListener('DOMContentLoaded', () => {
+    whatsappWrap = document.querySelector('.whatsapp-wrap');
+    // Fallback : affiche après 4s si l'utilisateur ne scrolle pas jusqu'au bout
+    if (whatsappWrap) setTimeout(() => whatsappWrap.classList.add('visible'), 4000);
+  });
+  // Fallback load si DOMContentLoaded déjà passé
+  window.addEventListener('load', () => {
+    if (!whatsappWrap) whatsappWrap = document.querySelector('.whatsapp-wrap');
+    if (whatsappWrap) setTimeout(() => whatsappWrap.classList.add('visible'), 4000);
+  });
 
   // ── Nav scroll + détection fond clair/foncé
   const lightSections = document.querySelectorAll('[data-nav-theme="light"]');
