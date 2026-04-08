@@ -188,7 +188,8 @@
     }
     @media (max-width: 768px) {
       .hero-logo-center img {
-        width: 80vw; /* taille maximale sans overflow sur mobile */
+        /* Laisse toujours 50px de marge de chaque côté pour les contrôles navbar */
+        width: min(80vw, calc(100vw - 100px));
       }
     }
     /* Logo navbar placeholder — invisible, réserve l'espace layout */
@@ -1333,16 +1334,10 @@
     // heroStart : le logo hero est centré via flex dans inset:0 → toujours centre du viewport
     heroStart = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
-    const navRect = navbar.getBoundingClientRect();
-    if (isMobile()) {
-      // Mobile : logo centré horizontalement dans la navbar (élément unique, pas de swap)
-      navDest = { x: window.innerWidth / 2, y: navRect.top + navRect.height / 2 };
-    } else {
-      // Desktop : cible le centre exact du #navbar-logo
-      const navLogoW = navbarLogoImg.offsetWidth || navH * 7.5;
-      const nL = navbarLogo.getBoundingClientRect();
-      navDest = { x: nL.left + navLogoW / 2, y: nL.top + navH / 2 };
-    }
+    // Cible le centre exact du #navbar-logo (côté gauche navbar, loin du hamburger)
+    const navLogoW = navbarLogoImg.offsetWidth || navH * 7.5;
+    const nL = navbarLogo.getBoundingClientRect();
+    navDest = { x: nL.left + navLogoW / 2, y: nL.top + navH / 2 };
   }
   measureLogos();
   window.addEventListener('load', () => {
