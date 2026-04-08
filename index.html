@@ -1340,49 +1340,81 @@
   function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
   function clamp01(v) { return Math.min(1, Math.max(0, v)); }
 
+  const isMobile = () => window.innerWidth <= 768;
+
   function updateHeroIntro() {
     const raw = Math.min(1, window.scrollY / ANIM_SCROLL);
+    const p   = ease(raw);
 
-    // ── Logo hero : 2 phases
-    // Phase 1 (raw 0→0.65) : rétrécit jusqu'à la taille navbar + monte vers le haut de l'écran
-    // Phase 2 (raw 0.65→0.80) : sort hors champ (taille constante = navbar)
-    const shrinkRaw = clamp01(raw / 0.65);
-    const shrinkP   = ease(shrinkRaw);
-    const scale     = 1 - shrinkP * (1 - targetScale);
+    if (isMobile()) {
+      // ── MOBILE : logo glisse directement du centre vers la navbar en une trajectoire
+      if (raw >= 1) {
+        heroLogoCenter.style.display = 'none';
+        navLogoFly.style.opacity = '0';
+        navbarLogo.classList.add('visible');
+      } else {
+        heroLogoCenter.style.display = 'flex';
+        navbarLogo.classList.remove('visible');
+        navLogoFly.style.opacity = '0';
 
-    const exitRaw = clamp01((raw - 0.65) / 0.15);
-    const exitP   = ease(exitRaw);
-    // Phase 1 : monte jusqu'au bord haut (centre logo à y=0 du viewport = top)
-    const yPhase1 = shrinkP * -(window.innerHeight * 0.5 + heroLogoImg.offsetHeight * targetScale * 0.5 + 4);
-    // Phase 2 : sort encore plus haut (hors champ total)
-    const yPhase2 = exitP * -(heroLogoImg.offsetHeight * targetScale + 40);
-    heroLogoCenter.style.transform = `translateY(${yPhase1 + yPhase2}px) scale(${scale})`;
+        // Position de départ : centre de l'écran (logo est position:absolute, inset:0, flex center)
+        const logoRect  = heroLogoImg.getBoundingClientRect();
+        const startX    = logoRect.left + logoRect.width / 2;
+        const startY    = logoRect.top  + logoRect.height / 2;
+        // Position finale : centre du logo dans la navbar
+        const navR      = navbarLogo.getBoundingClientRect();
+        const endX      = navR.left + navR.width / 2;
+        const endY      = navR.top  + navR.height / 2;
 
-    // Shadow diminue avec le rétrécissement
-    const sh = 1 - shrinkP;
-    heroLogoImg.style.filter = `drop-shadow(0 ${8*sh}px ${32*sh}px rgba(0,0,0,${0.45*sh})) drop-shadow(0 ${2*sh}px ${8*sh}px rgba(0,0,0,${0.3*sh}))`;
+        // Déplacement nécessaire depuis l'origine du logo (qui est centré via inset:0)
+        const heroSection = heroLogoCenter.getBoundingClientRect();
+        const originX = heroSection.left + heroSection.width / 2;
+        const originY = heroSection.top  + heroSection.height / 2;
 
-    // Cache le logo hero une fois hors champ
-    heroLogoCenter.style.display = raw >= 1 ? 'none' : 'flex';
+        const tx = (endX - originX) * p;
+        const ty = (endY - originY) * p;
 
-    // ── Logo volant : démarre à raw=0.55, overlap maximum avec la sortie du logo hero
-    const FLY_START = 0.55;
-    if (raw >= FLY_START && raw < 1) {
-      const flyP = ease(clamp01((raw - FLY_START) / (1 - FLY_START)));
-      const startY = -30; // juste au-dessus du viewport
-      navLogoFly.style.opacity = '1';
-      navLogoFly.style.left = navDest.x + 'px';
-      navLogoFly.style.top  = (startY + flyP * (navDest.y - startY)) + 'px';
-    } else if (raw < FLY_START) {
-      navLogoFly.style.opacity = '0';
-    }
+        const scale = 1 - p * (1 - targetScale);
+        heroLogoCenter.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
 
-    // ── Logo navbar réel : snap au moment où le logo volant arrive
-    if (raw >= 1) {
-      navLogoFly.style.opacity = '0';
-      navbarLogo.classList.add('visible');
+        const sh = 1 - p;
+        heroLogoImg.style.filter = `drop-shadow(0 ${8*sh}px ${32*sh}px rgba(0,0,0,${0.45*sh}))`;
+      }
+
     } else {
-      navbarLogo.classList.remove('visible');
+      // ── DESKTOP : animation 2 phases originale
+      const shrinkRaw = clamp01(raw / 0.65);
+      const shrinkP   = ease(shrinkRaw);
+      const scale     = 1 - shrinkP * (1 - targetScale);
+
+      const exitRaw = clamp01((raw - 0.65) / 0.15);
+      const exitP   = ease(exitRaw);
+      const yPhase1 = shrinkP * -(window.innerHeight * 0.5 + heroLogoImg.offsetHeight * targetScale * 0.5 + 4);
+      const yPhase2 = exitP * -(heroLogoImg.offsetHeight * targetScale + 40);
+      heroLogoCenter.style.transform = `translateY(${yPhase1 + yPhase2}px) scale(${scale})`;
+
+      const sh = 1 - shrinkP;
+      heroLogoImg.style.filter = `drop-shadow(0 ${8*sh}px ${32*sh}px rgba(0,0,0,${0.45*sh})) drop-shadow(0 ${2*sh}px ${8*sh}px rgba(0,0,0,${0.3*sh}))`;
+
+      heroLogoCenter.style.display = raw >= 1 ? 'none' : 'flex';
+
+      const FLY_START = 0.55;
+      if (raw >= FLY_START && raw < 1) {
+        const flyP = ease(clamp01((raw - FLY_START) / (1 - FLY_START)));
+        const startY = -30;
+        navLogoFly.style.opacity = '1';
+        navLogoFly.style.left = navDest.x + 'px';
+        navLogoFly.style.top  = (startY + flyP * (navDest.y - startY)) + 'px';
+      } else if (raw < FLY_START) {
+        navLogoFly.style.opacity = '0';
+      }
+
+      if (raw >= 1) {
+        navLogoFly.style.opacity = '0';
+        navbarLogo.classList.add('visible');
+      } else {
+        navbarLogo.classList.remove('visible');
+      }
     }
 
     // ── Texte + boutons : apparaissent à partir de raw=0.55
