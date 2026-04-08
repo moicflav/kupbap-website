@@ -1367,24 +1367,18 @@
     const p   = ease(raw);
 
     if (isMobile()) {
-      // ── MOBILE : logo glisse du centre hero → position navbar (position: fixed, root z-index)
+      // ── MOBILE : un seul élément, jamais de swap
+      // hero-logo-center glisse vers la navbar et reste figé à destination
       navLogoFly.style.opacity = '0';
-      if (raw >= 1) {
-        // Swap : hero-logo-center arrive exactement sur navbarLogo → swap instantané sans gap
-        heroLogoCenter.style.display = 'none';
-        navbarLogo.classList.add('visible');
-      } else {
-        heroLogoCenter.style.display = 'flex';
-        navbarLogo.classList.remove('visible');
-        const tx = (navDest.x - heroStart.x) * p;
-        const ty = (navDest.y - heroStart.y) * p;
-        const scale = 1 - p * (1 - targetScale);
-        heroLogoCenter.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
-        const sh = 1 - raw;
-        heroLogoImg.style.filter = sh > 0
-          ? `drop-shadow(0 ${8*sh}px ${32*sh}px rgba(0,0,0,${0.45*sh}))`
-          : '';
-      }
+      const clampedP = Math.min(p, 1);
+      const tx    = (navDest.x - heroStart.x) * clampedP;
+      const ty    = (navDest.y - heroStart.y) * clampedP;
+      const scale = 1 - clampedP * (1 - targetScale);
+      heroLogoCenter.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+      const sh = 1 - Math.min(raw, 1);
+      heroLogoImg.style.filter = sh > 0
+        ? `drop-shadow(0 ${8*sh}px ${32*sh}px rgba(0,0,0,${0.45*sh}))`
+        : '';
 
     } else {
       // ── DESKTOP : animation 2 phases originale
