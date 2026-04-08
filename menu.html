@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu — KUPBAP | Restaurant coréen Puteaux</title>
+  <meta name="description" content="Découvrez le menu KUPBAP : cupbap à composer, poulet frit coréen, créations du chef, barbecue coréen, desserts. Restaurant coréen à Puteaux (92).">
+  <meta property="og:title" content="Menu — KUPBAP | Restaurant coréen Puteaux">
+  <meta property="og:description" content="Découvrez le menu KUPBAP : cupbap à composer, poulet frit coréen, créations du chef, barbecue coréen, desserts.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.kupbap.fr/menu">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:image" content="https://www.kupbap.fr/Kupbap_brand_assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Menu — KUPBAP | Restaurant coréen Puteaux">
+  <meta name="twitter:image" content="https://www.kupbap.fr/Kupbap_brand_assets/og-image.jpg">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.kupbap.fr/menu">
+  <link rel="icon" type="image/png" href="Kupbap_brand_assets/Logo-Kupbap-1.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <style>
+    @font-face { font-family: 'Intro Rust'; src: url('Kupbap_brand_assets/Fonts/IntroRust.woff2') format('woff2'); font-weight: normal; font-display: swap; }
+    
+    
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --blue:#12448E; --red:#FF3131; --cream:#F8F4E3; --gold:#E8A317; --dark:#1A1A2E; --gray:#9A9A9A; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden;}
+    .font-display{font-family:'Intro Rust',sans-serif;}
+
+    /* ── NAV — floating pill identique à l'index ── */
+    #navbar{position:fixed;top:1.8rem;left:0;right:0;z-index:100;padding:0 2rem;}
+    .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0);backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);border:1px solid rgba(255,255,255,0);border-radius:20px;padding:0.35rem 1.75rem;transition:background 0.5s ease,box-shadow 0.5s ease,border-color 0.5s ease,backdrop-filter 0.5s ease;}
+    #navbar.scrolled .nav-inner{background:rgba(255,255,255,0.15);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 8px 32px rgba(0,0,0,0.12);border-color:rgba(255,255,255,0.25);}
+    .nav-link{color:white;font-weight:600;font-size:0.78rem;text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;transition:opacity 0.2s,color 0.3s;padding:0.25rem 0;opacity:0.85;}
+    .nav-link:hover{opacity:1;}
+    .nav-link.active{opacity:1;}
+    #navbar.nav-dark .nav-link{color:var(--blue);opacity:1;}
+    #navbar.nav-dark #navbar-logo img{filter:brightness(0) saturate(100%) invert(19%) sepia(82%) saturate(800%) hue-rotate(197deg) brightness(75%);transition:filter 0.3s ease;}
+    #navbar-logo img{transition:filter 0.3s ease;}
+    #navbar.nav-dark .btn-nav{background:var(--blue);box-shadow:0 4px 14px rgba(18,68,142,0.35);}
+    #navbar.nav-dark .btn-nav:hover{background:#0f3a7a;}
+    .btn-nav{background:var(--red);color:white;padding:0.6rem 1.3rem;border-radius:8px;font-weight:600;font-size:0.78rem;letter-spacing:0.05em;text-decoration:none;text-transform:uppercase;transition:background 0.2s,transform 0.2s,box-shadow 0.2s;box-shadow:0 4px 14px rgba(255,49,49,0.35);}
+    .btn-nav:hover{background:#d42020;transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,49,49,0.45);}
+    .btn-nav:active{transform:translateY(0);}
+    .btn-nav-outline{color:white;padding:0.6rem 1.3rem;border-radius:8px;font-weight:600;font-size:0.78rem;letter-spacing:0.05em;text-decoration:none;text-transform:uppercase;border:1.5px solid rgba(255,255,255,0.55);transition:background 0.2s,border-color 0.2s,transform 0.2s;}
+    .btn-nav-outline:hover{background:rgba(255,255,255,0.12);border-color:white;transform:translateY(-1px);}
+    .btn-nav-outline:active{transform:translateY(0);}
+    #navbar.nav-dark .btn-nav-outline{color:var(--blue);border-color:rgba(18,68,142,0.4);}
+    #navbar.nav-dark .btn-nav-outline:hover{background:rgba(18,68,142,0.08);border-color:var(--blue);}
+    #mobileMenu{display:none;position:fixed;inset:0;background:var(--dark);z-index:200;flex-direction:column;align-items:center;justify-content:center;gap:1.25rem;}
+    #mobileMenu.open{display:flex;}
+    .mobile-link{font-family:'Intro Rust',sans-serif;font-size:clamp(1.4rem,5vw,1.8rem);color:white;text-decoration:none;transition:color 0.2s;letter-spacing:0.05em;}
+    .mobile-link:hover{color:var(--red);}
+    .hamburger-btn{background:none;border:none;cursor:pointer;padding:0.25rem;}
+    @media(max-width:768px){.desktop-nav{display:none!important;}}
+    @media(min-width:769px){.hamburger-btn{display:none;}}
+
+    /* PAGE HEADER */
+    .page-header{background:var(--blue);padding:clamp(6.5rem,15vh,10rem) clamp(1.25rem,5vw,2rem) clamp(2.5rem,5vh,4rem);position:relative;overflow:hidden;}
+    .page-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(255,49,49,0.2) 0%,transparent 60%);}
+    .wave{display:block;width:100%;line-height:0;}
+    .wave-wrap{line-height:0;overflow:hidden;margin-bottom:-4px;}
+
+    /* ── MENU VIEWER ── */
+    .menu-viewer-section { background: var(--cream); padding: clamp(2.5rem,6vh,4.5rem) clamp(1.25rem,5vw,2rem) clamp(3rem,7vh,5.5rem); }
+
+    /* Toggle langue */
+    .lang-toggle {
+      display: inline-flex; align-items: center;
+      background: white; border: 1px solid rgba(26,26,46,0.1);
+      border-radius: 100px; padding: 4px;
+      box-shadow: 0 2px 10px rgba(26,26,46,0.08);
+      margin-bottom: 2rem;
+    }
+    .lang-btn {
+      padding: 0.4rem 1.1rem; border-radius: 100px; border: none; cursor: pointer;
+      font-family: 'Intro Rust', sans-serif; font-size: 0.78rem; letter-spacing: 0.08em;
+      background: transparent; color: var(--gray);
+      transition: background 0.25s, color 0.25s;
+    }
+    .lang-btn.active { background: var(--blue); color: white; }
+    .lang-btn:hover:not(.active) { color: var(--dark); }
+    .menu-viewer-wrap { max-width: 860px; margin: 0 auto; }
+    .menu-viewer-header { text-align: center; margin-bottom: 2.5rem; }
+    .menu-viewer-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--red); margin-bottom: 0.5rem; }
+    .menu-viewer-title { font-family: 'Intro Rust', sans-serif; font-size: clamp(2rem, 4vw, 3rem); color: var(--dark); line-height: 1; }
+
+    .menu-viewer-stage {
+      position: relative;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(26,26,46,0.14), 0 4px 16px rgba(26,26,46,0.08);
+      overflow: hidden;
+    }
+    .menu-viewer-stage img {
+      display: block;
+      width: 100%;
+      height: auto;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    /* Zones clic gauche / droite */
+    .viewer-hit-prev, .viewer-hit-next {
+      position: absolute; top: 0; bottom: 0; width: 40%; cursor: pointer; z-index: 5;
+    }
+    .viewer-hit-prev { left: 0; }
+    .viewer-hit-next { right: 0; }
+
+    /* Boutons flottants */
+    .viewer-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(8px);
+      border: 1px solid rgba(26,26,46,0.1);
+      box-shadow: 0 4px 16px rgba(26,26,46,0.15);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 10;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .viewer-btn:hover { background: white; box-shadow: 0 8px 24px rgba(26,26,46,0.2); transform: translateY(-50%) scale(1.08); }
+    .viewer-btn:active { transform: translateY(-50%) scale(0.96); }
+    .viewer-btn.disabled { opacity: 0.25; pointer-events: none; }
+    .viewer-btn-prev { left: 14px; }
+    .viewer-btn-next { right: 14px; }
+    .viewer-btn svg { flex-shrink: 0; }
+
+    /* Boutons mobiles dans la barre basse (cachés sur desktop) */
+    .viewer-ctrl-btn {
+      display: none;
+      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+      background: white; border: 1px solid rgba(26,26,46,0.12);
+      box-shadow: 0 2px 8px rgba(26,26,46,0.12);
+      align-items: center; justify-content: center; cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .viewer-ctrl-btn:hover { background: white; box-shadow: 0 4px 14px rgba(26,26,46,0.18); transform: scale(1.08); }
+    .viewer-ctrl-btn:active { transform: scale(0.96); }
+    .viewer-ctrl-btn.disabled { opacity: 0.25; pointer-events: none; }
+    @media (max-width: 768px) {
+      .viewer-btn { display: none; }          /* cache les flottants sur l'image */
+      .viewer-ctrl-btn { display: flex; }     /* affiche les boutons dans la barre */
+    }
+
+    /* Barre de navigation basse */
+    .viewer-controls {
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .viewer-page-info {
+      font-family: 'Intro Rust', sans-serif;
+      font-size: 0.85rem; letter-spacing: 0.1em; color: var(--dark);
+    }
+    .viewer-dots {
+      display: flex; gap: 6px; align-items: center;
+    }
+    .viewer-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(26,26,46,0.15);
+      transition: background 0.25s, transform 0.25s;
+      cursor: pointer;
+    }
+    .viewer-dot.active { background: var(--red); transform: scale(1.4); }
+
+    /* Transition page */
+    .menu-viewer-stage img { transition: opacity 0.2s ease; }
+    .menu-viewer-stage img.fading { opacity: 0; }
+
+    /* MENU LAYOUT */
+    .menu-container{max-width:1000px;margin:0 auto;padding:4rem 2rem 5rem;}
+    .menu-section-header{display:flex;align-items:center;gap:1rem;margin:3.5rem 0 1.75rem;}
+    .menu-section-line{flex:1;height:1px;background:rgba(18,68,142,0.12);}
+    .menu-section-title{font-family:'Intro Rust',sans-serif;font-size:1.6rem;letter-spacing:0.08em;color:var(--blue);white-space:nowrap;}
+
+    /* Menu items */
+    .menu-item{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;padding:1.25rem 0;border-bottom:1px solid rgba(26,26,46,0.06);}
+    .menu-item:last-child{border-bottom:none;}
+    .item-left{flex:1;}
+    .item-thumb{width:68px;height:68px;flex-shrink:0;border-radius:8px;overflow:hidden;background:var(--cream);}
+    .item-thumb img{width:100%;height:100%;object-fit:contain;display:block;}
+    .item-name{font-weight:600;font-size:0.95rem;color:var(--dark);margin-bottom:0.2rem;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;}
+    .item-ko{font-size:0.75rem;color:var(--gray);font-weight:400;}
+    .item-desc{color:#666;font-size:0.82rem;line-height:1.65;margin-top:0.2rem;}
+    .item-price{font-family:'Intro Rust',sans-serif;font-size:1.3rem;color:var(--red);white-space:nowrap;flex-shrink:0;}
+
+    /* Badges */
+    .badge{display:inline-block;padding:0.18rem 0.6rem;border-radius:100px;font-size:0.65rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;}
+    .vegan{background:#e8f5e9;color:#2e7d32;}
+    .spicy{background:#fff3e0;color:#bf360c;}
+    .new{background:#e3f2fd;color:#1565c0;}
+    .soir{background:rgba(232,163,23,0.15);color:#a67000;}
+
+    /* Cupbap composer */
+    .composer-box{background:white;border-radius:12px;padding:2rem;margin-bottom:2rem;border:2px solid rgba(18,68,142,0.1);}
+    .composer-box h3{font-family:'Intro Rust',sans-serif;font-size:1.1rem;letter-spacing:0.06em;color:var(--blue);margin-bottom:1rem;}
+    .composer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.5rem;}
+    .composer-tag{background:var(--cream);border:1px solid rgba(18,68,142,0.12);border-radius:6px;padding:0.4rem 0.7rem;font-size:0.78rem;color:var(--dark);text-align:center;}
+    .composer-tag.highlight{background:rgba(18,68,142,0.08);border-color:var(--blue);color:var(--blue);font-weight:600;}
+    .composer-tag.extra{background:rgba(232,163,23,0.1);border-color:rgba(232,163,23,0.3);color:#a67000;}
+
+    /* CTA strip */
+    .cta-strip{background:var(--blue);padding:3rem 2rem;text-align:center;}
+    .btn-primary{display:inline-flex;align-items:center;gap:0.5rem;background:var(--red);color:white;padding:0.9rem 1.75rem;border-radius:4px;font-weight:600;font-size:0.88rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;transition:background 0.2s,transform 0.2s,box-shadow 0.2s;box-shadow:0 6px 20px rgba(255,49,49,0.4);}
+    .btn-primary:hover{background:#d42020;transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,49,49,0.5);}
+    .btn-ghost{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.18);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:white;padding:0.9rem 1.75rem;border-radius:4px;font-weight:600;font-size:0.88rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;border:1.5px solid rgba(255,255,255,0.45);transition:background 0.2s,border-color 0.2s,transform 0.2s;}
+    .btn-ghost:hover{background:rgba(255,255,255,0.18);border-color:white;transform:translateY(-2px);}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.55s ease,transform 0.55s ease;}
+    .reveal.up{opacity:1;transform:translateY(0);}
+
+    footer{background:#12448E;padding:3rem 2rem 2rem;}
+    .footer-link{color:rgba(255,255,255,0.4);font-size:0.82rem;text-decoration:none;transition:color 0.2s;}
+    .footer-link:hover{color:white;}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" id="navbar-logo">
+      <img src="Kupbap_brand_assets/Logo/logo.svg" alt="KUPBAP — Korean Food in a Cup" style="height:24px;width:auto;">
+    </a>
+    <div class="desktop-nav" style="display:flex;align-items:center;gap:2rem;">
+      <a href="index.html" class="nav-link">Accueil</a>
+      <a href="menu.html" class="nav-link active">Menu</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <a href="https://reservation.laddition.com/booking/kupbapfr#/date" target="_blank" rel="noopener noreferrer" class="btn-nav-outline">Réserver</a>
+        <a href="https://go.obypay.com/api/cashless/hws/4sv3" target="_blank" rel="noopener noreferrer" class="btn-nav">Commander</a>
+      </div>
+    </div>
+    <button type="button" class="hamburger-btn" onclick="toggleMenu()" aria-label="Ouvrir le menu">
+      <svg width="26" height="26" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" id="hamIcon">
+        <line x1="3" y1="7" x2="23" y2="7"/><line x1="3" y1="13" x2="23" y2="13"/><line x1="3" y1="19" x2="23" y2="19"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+<div id="mobileMenu">
+  <button type="button" onclick="toggleMenu()" style="position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;cursor:pointer;" aria-label="Fermer">
+    <svg width="30" height="30" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+      <line x1="5" y1="5" x2="25" y2="25"/><line x1="25" y1="5" x2="5" y2="25"/>
+    </svg>
+  </button>
+  <a href="index.html" class="mobile-link" onclick="toggleMenu()">Accueil</a>
+  <a href="menu.html" class="mobile-link" onclick="toggleMenu()">Menu</a>
+  <a href="contact.html" class="mobile-link" onclick="toggleMenu()">Contact</a>
+  <a href="https://go.obypay.com/api/cashless/hws/4sv3" target="_blank" class="mobile-link" style="color:var(--red);">Commander →</a>
+</div>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div style="max-width:1000px;margin:0 auto;position:relative;z-index:1;text-align:center;">
+    <div style="display:inline-block;text-align:left;">
+      <p style="font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.6rem;">Été 2026</p>
+      <h1 style="font-family:'Intro Rust',sans-serif;font-size:clamp(2.2rem,5.5vw,4rem);line-height:0.9;color:white;">La <span style="color:var(--red);">Carte</span></h1>
+    </div>
+  </div>
+</div>
+<svg class="wave" style="background:var(--blue);display:block;margin-bottom:-4px;" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,30 C360,60 1080,0 1440,40 L1440,60 L0,60 Z" fill="#F8F4E3"/>
+</svg>
+
+<!-- ══════════════ MENU VIEWER PNG ══════════════ -->
+<section class="menu-viewer-section" data-nav-theme="light">
+  <div class="menu-viewer-wrap">
+
+    <!-- Toggle FR / EN -->
+    <div style="text-align:center;">
+      <div class="lang-toggle">
+        <button type="button" class="lang-btn active" id="langFR" onclick="switchLang('fr')">FR</button>
+        <button type="button" class="lang-btn" id="langEN" onclick="switchLang('en')">EN</button>
+      </div>
+    </div>
+
+    <div class="menu-viewer-stage reveal" id="menuViewerStage">
+      <img id="menuViewerImg" src="Kupbap_brand_assets/Menu/Menu-ete-2026-francais/1.png" alt="Menu KUPBAP page 1">
+      <!-- Zone clic -->
+      <div class="viewer-hit-prev" onclick="viewerNav(-1)"></div>
+      <div class="viewer-hit-next" onclick="viewerNav(1)"></div>
+      <!-- Boutons flottants -->
+      <button class="viewer-btn viewer-btn-prev disabled" id="viewerBtnPrev" onclick="viewerNav(-1)" aria-label="Page précédente">
+        <svg width="18" height="18" fill="none" stroke="var(--dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="viewer-btn viewer-btn-next" id="viewerBtnNext" onclick="viewerNav(1)" aria-label="Page suivante">
+        <svg width="18" height="18" fill="none" stroke="var(--dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+    <!-- Contrôles bas -->
+    <div class="viewer-controls">
+      <button class="viewer-ctrl-btn disabled" id="viewerCtrlPrev" onclick="viewerNav(-1)" aria-label="Page précédente">
+        <svg width="16" height="16" fill="none" stroke="var(--dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="viewer-dots" id="viewerDots"></div>
+      <span class="viewer-page-info" id="viewerPageInfo">1 / 13</span>
+      <button class="viewer-ctrl-btn" id="viewerCtrlNext" onclick="viewerNav(1)" aria-label="Page suivante">
+        <svg width="16" height="16" fill="none" stroke="var(--dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+    <!-- CTA commander -->
+    <div class="reveal" style="text-align:center;margin-top:2.5rem;">
+      <a href="https://go.obypay.com/api/cashless/hws/4sv3" target="_blank" rel="noopener noreferrer" class="btn-primary">Commander maintenant →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Wave viewer → footer -->
+<div class="wave-wrap" style="background:var(--cream);">
+  <svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,20 C320,60 720,0 1080,35 C1260,50 1380,15 1440,25 L1440,60 L0,60 Z" fill="#12448E"/>
+  </svg>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:2rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:1.5rem;">
+      <img src="Kupbap_brand_assets/Logo/logo.svg" alt="KUPBAP" style="height:26px;width:auto;">
+      <nav style="display:flex;flex-wrap:wrap;gap:1.75rem;align-items:center;">
+        <a href="index.html" class="footer-link">Accueil</a>
+        <a href="menu.html" class="footer-link">Menu</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+        <a href="https://www.instagram.com/kupbapfr" target="_blank" rel="noopener noreferrer" class="footer-link" style="display:inline-flex;align-items:center;gap:0.4rem;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          @kupbapfr
+        </a>
+      </nav>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;">
+      <p style="color:rgba(255,255,255,0.2);font-size:0.75rem;">© 2026 KUPBAP — Tous droits réservés</p>
+      <p style="color:rgba(255,255,255,0.12);font-size:0.72rem;letter-spacing:0.08em;font-family:'Intro Rust',sans-serif;">Korean Food in a Cup</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Menu viewer PNG
+  const VIEWER_PAGES   = 13;
+  const VIEWER_LANGS   = {
+    fr: 'Kupbap_brand_assets/Menu/Menu-ete-2026-francais/',
+    en: 'Kupbap_brand_assets/Menu/Menu-ete-2026-anglais/'
+  };
+  const VIEWER_EN_START = 14; // les fichiers EN commencent à 14.png
+  let   viewerLang     = 'fr';
+  let   VIEWER_BASE    = VIEWER_LANGS.fr;
+  const viewerImg      = document.getElementById('menuViewerImg');
+  const viewerBtnPrev  = document.getElementById('viewerBtnPrev');
+  const viewerBtnNext  = document.getElementById('viewerBtnNext');
+  const viewerCtrlPrev = document.getElementById('viewerCtrlPrev');
+  const viewerCtrlNext = document.getElementById('viewerCtrlNext');
+  const viewerPageInfo = document.getElementById('viewerPageInfo');
+  const viewerDotsEl   = document.getElementById('viewerDots');
+  let viewerPage       = 1;
+
+  // Génère les dots
+  for (let i = 1; i <= VIEWER_PAGES; i++) {
+    const d = document.createElement('span');
+    d.className = 'viewer-dot' + (i === 1 ? ' active' : '');
+    d.addEventListener('click', () => viewerGoto(i));
+    viewerDotsEl.appendChild(d);
+  }
+
+  function viewerUpdateUI() {
+    viewerPageInfo.textContent = viewerPage + ' / ' + VIEWER_PAGES;
+    viewerBtnPrev.classList.toggle('disabled', viewerPage === 1);
+    viewerBtnNext.classList.toggle('disabled', viewerPage === VIEWER_PAGES);
+    viewerCtrlPrev.classList.toggle('disabled', viewerPage === 1);
+    viewerCtrlNext.classList.toggle('disabled', viewerPage === VIEWER_PAGES);
+    document.querySelectorAll('.viewer-dot').forEach((d, i) => {
+      d.classList.toggle('active', i + 1 === viewerPage);
+    });
+  }
+
+  function viewerPageFile(page) {
+    const num = viewerLang === 'en' ? page + VIEWER_EN_START - 1 : page;
+    return VIEWER_BASE + num + '.png';
+  }
+
+  function viewerGoto(page) {
+    if (page < 1 || page > VIEWER_PAGES || page === viewerPage) return;
+    viewerImg.classList.add('fading');
+    setTimeout(() => {
+      viewerPage = page;
+      viewerImg.src = viewerPageFile(page);
+      viewerImg.alt = 'Menu KUPBAP page ' + page;
+      viewerImg.classList.remove('fading');
+      viewerUpdateUI();
+    }, 200);
+  }
+
+  function viewerNav(dir) { viewerGoto(viewerPage + dir); }
+
+  function switchLang(lang) {
+    if (lang === viewerLang) return;
+    viewerLang  = lang;
+    VIEWER_BASE = VIEWER_LANGS[lang];
+    document.getElementById('langFR').classList.toggle('active', lang === 'fr');
+    document.getElementById('langEN').classList.toggle('active', lang === 'en');
+    viewerImg.classList.add('fading');
+    setTimeout(() => {
+      viewerImg.src = viewerPageFile(viewerPage);
+      viewerImg.classList.remove('fading');
+    }, 200);
+  }
+
+  // Swipe tactile
+  let touchStartX = 0;
+  document.getElementById('menuViewerStage').addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  document.getElementById('menuViewerStage').addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) viewerNav(dx < 0 ? 1 : -1);
+  });
+
+  // Raccourcis clavier (flèches)
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') viewerNav(1);
+    if (e.key === 'ArrowLeft')  viewerNav(-1);
+  });
+
+  viewerUpdateUI();
+
+  function toggleMenu(){const m=document.getElementById('mobileMenu');m.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+
+  // ── Nav scroll (fond vitré au scroll)
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── Nav-dark : texte bleu sur sections claires
+  const navH = navbar.offsetHeight + 30;
+  const lightSections = document.querySelectorAll('[data-nav-theme="light"]');
+  let lightCount = 0;
+  const navThemeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      lightCount += e.isIntersecting ? 1 : -1;
+      lightCount = Math.max(0, lightCount);
+    });
+    navbar.classList.toggle('nav-dark', lightCount > 0);
+  }, {
+    rootMargin: `-${navH}px 0px -${window.innerHeight - navH - 2}px 0px`,
+    threshold: 0
+  });
+  lightSections.forEach(s => navThemeObserver.observe(s));
+
+  // ── Scroll reveal
+  const observer = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('up'); }), {threshold:0.08, rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
