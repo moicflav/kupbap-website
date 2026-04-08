@@ -389,7 +389,10 @@
       animation: reviews-scroll 35s linear infinite;
       padding: 0.5rem 0 1rem;
     }
-    .reviews-track:hover { animation-play-state: paused; }
+    /* Pause au survol uniquement sur les appareils avec souris réelle */
+    @media (hover: hover) {
+      .reviews-track:hover { animation-play-state: paused; }
+    }
     @keyframes reviews-scroll {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
@@ -1587,6 +1590,25 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('up'); });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── Reviews carousel : reprise auto après touch sur mobile
+  (function() {
+    const track = document.querySelector('.reviews-track');
+    if (!track) return;
+    let resumeTimer = null;
+
+    track.addEventListener('touchstart', () => {
+      clearTimeout(resumeTimer);
+      track.style.animationPlayState = 'paused';
+    }, { passive: true });
+
+    track.addEventListener('touchend', () => {
+      // Délai court avant reprise pour éviter un saut visuel
+      resumeTimer = setTimeout(() => {
+        track.style.animationPlayState = 'running';
+      }, 600);
+    }, { passive: true });
+  })();
 </script>
 </body>
 </html>
