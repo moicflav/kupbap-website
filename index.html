@@ -459,8 +459,8 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       .desktop-nav { display: none !important; }
-      /* Hero mobile : la section s'adapte au contenu, plus de 100vh forcé */
-      .hero { --hero-gap: clamp(1.25rem, 3vh, 2rem); min-height: fit-content; }
+      /* Hero mobile : exactement la hauteur de l'écran */
+      .hero { --hero-gap: clamp(1.25rem, 3vh, 2rem); min-height: 100vh; min-height: 100svh; }
       .hero-title { font-size: clamp(3rem, 12vw, 4.5rem); }
       .hero-sub { font-size: 0.92rem; line-height: 1.65; margin-bottom: 2rem; max-width: 72%; }
       .hero-ctas { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
@@ -1320,10 +1320,8 @@
     const viewH    = window.innerHeight;
     const animH    = viewH * 0.65;
     const contentH = document.getElementById('hero-content').offsetHeight;
-    // Mobile : la section colle au contenu (pas de 100vh forcé)
-    // Desktop : au moins 100vh pour que la hero remplisse l'écran
-    const isMobile = window.innerWidth <= 768;
-    const sectionH = isMobile ? contentH : Math.max(contentH, viewH);
+    // La hero fait toujours exactement 100vh sur tous les breakpoints
+    const sectionH = Math.max(contentH, viewH);
     wrapper.style.height = (sectionH + animH) + 'px';
     ANIM_SCROLL = animH;
   }
