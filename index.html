@@ -52,12 +52,6 @@
     #navbar {
       position: fixed; top: 1.8rem; left: 0; right: 0; z-index: 100;
       padding: 0 2rem;
-      transition: opacity 0.4s ease;
-    }
-    /* Sur mobile : navbar cachée au départ, apparaît après l'animation logo */
-    @media (max-width: 768px) {
-      #navbar.logo-animating { opacity: 0; pointer-events: none; }
-      #navbar.logo-arrived   { opacity: 1; pointer-events: auto; }
     }
     .nav-inner {
       max-width: 1200px; margin: 0 auto;
@@ -185,7 +179,6 @@
       position: absolute; inset: 0; z-index: 101;
       display: flex; align-items: center; justify-content: center;
       pointer-events: none;
-      transition: opacity 0.4s ease;
     }
     .hero-logo-center img {
       width: clamp(360px, 52vw, 680px);
@@ -200,6 +193,7 @@
       position: fixed; z-index: 101;
       pointer-events: none; opacity: 0;
       top: 0; left: 0;
+      transform: translate(-50%, -50%);
     }
     #navbar-logo-fly img { height: 24px; width: auto; display: block; }
 
@@ -1364,32 +1358,19 @@
 
     if (isMobile()) {
       // ── MOBILE : logo glisse directement du centre vers la navbar
+      // Swap instantané à raw=1 (les deux logos sont au même endroit → aucun gap visible)
       if (raw >= 1) {
-        // Cross-fade : heroLogo s'efface, navbar apparaît simultanément
-        heroLogoCenter.style.opacity = '0';
-        heroLogoCenter.style.pointerEvents = 'none';
+        heroLogoCenter.style.display = 'none';
         navLogoFly.style.opacity = '0';
         navbarLogo.classList.add('visible');
-        navbar.classList.remove('logo-animating');
-        navbar.classList.add('logo-arrived');
-        // Masquer complètement après la transition
-        setTimeout(() => { heroLogoCenter.style.display = 'none'; }, 420);
       } else {
         heroLogoCenter.style.display = 'flex';
-        heroLogoCenter.style.opacity = '1';
-        heroLogoCenter.style.pointerEvents = '';
         navbarLogo.classList.remove('visible');
         navLogoFly.style.opacity = '0';
-        // Navbar cachée pendant l'animation
-        navbar.classList.add('logo-animating');
-        navbar.classList.remove('logo-arrived');
 
-        // Translation : depuis le centre du logo hero vers le centre du logo navbar
-        // heroStart et navDest sont mesurés SANS transformation (voir measureLogos)
         const tx = (navDest.x - heroStart.x) * p;
         const ty = (navDest.y - heroStart.y) * p;
         const scale = 1 - p * (1 - targetScale);
-
         heroLogoCenter.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
 
         const sh = 1 - p;
