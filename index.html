@@ -45,7 +45,7 @@
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; width: 100%; max-width: 100%; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: clip; width: 100%; max-width: 100%; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; width: 100%; max-width: 100%; }
     .font-display { font-family: 'Intro Rust', sans-serif; letter-spacing: 0.02em; }
 
     /* ── NAV ── */
@@ -1355,7 +1355,7 @@
     ANIM_SCROLL = animH;
   }
   window.addEventListener('load', fixHeroWrapper);
-  window.addEventListener('resize', () => { measureLogos(); fixHeroWrapper(); });
+  window.addEventListener('resize', () => { measureLogos(); fixHeroWrapper(); updateHeroIntro(); });
 
   function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
   function clamp01(v) { return Math.min(1, Math.max(0, v)); }
