@@ -44,8 +44,8 @@
       --gray: #9A9A9A;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; width: 100%; max-width: 100%; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; overscroll-behavior-x: none; width: 100%; max-width: 100%; }
+    html { scroll-behavior: smooth; overflow-x: clip; width: 100%; max-width: 100%; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: clip; overscroll-behavior-x: none; width: 100%; max-width: 100%; }
     .font-display { font-family: 'Intro Rust', sans-serif; letter-spacing: 0.02em; }
 
     /* ── NAV ── */
