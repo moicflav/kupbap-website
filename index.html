@@ -1309,16 +1309,24 @@
   let ANIM_SCROLL      = window.innerHeight * 0.65;
 
   // targetScale = ratio taille navbar / taille hero logo
-  // navDest = position finale du logo dans la navbar (pour le logo volant)
+  // navDest = position finale du logo dans la navbar
+  // heroStart = position initiale du centre du logo hero (mesurée sans transformation)
   let targetScale = 0.08;
-  let navDest = { x: 0, y: 0 };
+  let navDest  = { x: 0, y: 0 };
+  let heroStart = { x: 0, y: 0 };
+
   function measureLogos() {
+    // Reset transform pour mesurer la vraie position initiale
+    heroLogoCenter.style.transform = '';
     const heroH = heroLogoImg.offsetHeight;
     const navH  = navbarLogoImg.offsetHeight || 24;
     if (heroH > 0) targetScale = navH / heroH;
-    // Position réelle du placeholder navbar logo
-    const r = navbarLogo.getBoundingClientRect();
-    navDest = { x: r.left, y: r.top };
+    // Centre du logo hero dans le viewport (sans transformation)
+    const hR = heroLogoImg.getBoundingClientRect();
+    heroStart = { x: hR.left + hR.width / 2, y: hR.top + hR.height / 2 };
+    // Centre du logo dans la navbar
+    const nR = navbarLogo.getBoundingClientRect();
+    navDest = { x: nR.left + nR.width / 2, y: nR.top + nR.height / 2 };
   }
   measureLogos();
   window.addEventListener('load', measureLogos);
@@ -1347,7 +1355,7 @@
     const p   = ease(raw);
 
     if (isMobile()) {
-      // ── MOBILE : logo glisse directement du centre vers la navbar en une trajectoire
+      // ── MOBILE : logo glisse directement du centre vers la navbar
       if (raw >= 1) {
         heroLogoCenter.style.display = 'none';
         navLogoFly.style.opacity = '0';
@@ -1357,24 +1365,12 @@
         navbarLogo.classList.remove('visible');
         navLogoFly.style.opacity = '0';
 
-        // Position de départ : centre de l'écran (logo est position:absolute, inset:0, flex center)
-        const logoRect  = heroLogoImg.getBoundingClientRect();
-        const startX    = logoRect.left + logoRect.width / 2;
-        const startY    = logoRect.top  + logoRect.height / 2;
-        // Position finale : centre du logo dans la navbar
-        const navR      = navbarLogo.getBoundingClientRect();
-        const endX      = navR.left + navR.width / 2;
-        const endY      = navR.top  + navR.height / 2;
-
-        // Déplacement nécessaire depuis l'origine du logo (qui est centré via inset:0)
-        const heroSection = heroLogoCenter.getBoundingClientRect();
-        const originX = heroSection.left + heroSection.width / 2;
-        const originY = heroSection.top  + heroSection.height / 2;
-
-        const tx = (endX - originX) * p;
-        const ty = (endY - originY) * p;
-
+        // Translation : depuis le centre du logo hero vers le centre du logo navbar
+        // heroStart et navDest sont mesurés SANS transformation (voir measureLogos)
+        const tx = (navDest.x - heroStart.x) * p;
+        const ty = (navDest.y - heroStart.y) * p;
         const scale = 1 - p * (1 - targetScale);
+
         heroLogoCenter.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
 
         const sh = 1 - p;
