@@ -1652,7 +1652,7 @@
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // ── WhatsApp orbital text : ajuste le rayon pour fermer la boucle exactement
+  // ── WhatsApp orbital text : ajuste le rayon après chargement police
   (function() {
     var orbitSvg  = document.querySelector('.whatsapp-orbit');
     var orbitPath = document.getElementById('wa-circle');
@@ -1660,22 +1660,20 @@
     if (!orbitSvg || !orbitPath || !textEl) return;
 
     function fitOrbit() {
-      // Mesure la longueur naturelle du texte avec un élément temporaire (hors textPath)
       var tmp = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       tmp.setAttribute('font-size',     textEl.getAttribute('font-size'));
       tmp.setAttribute('font-family',   textEl.getAttribute('font-family'));
       tmp.setAttribute('font-weight',   textEl.getAttribute('font-weight'));
       tmp.setAttribute('letter-spacing',textEl.getAttribute('letter-spacing'));
+      tmp.setAttribute('x', '-9999');
       tmp.textContent = document.getElementById('wa-orbit-path').textContent;
-      tmp.style.visibility = 'hidden';
       orbitSvg.appendChild(tmp);
 
       var len = tmp.getComputedTextLength();
       orbitSvg.removeChild(tmp);
       if (!len) return;
 
-      // Rayon exact pour que le texte fasse exactement un tour
-      var r  = len / (2 * Math.PI);
+      var r = len / (2 * Math.PI);
       var cx = 45, cy = 45;
       orbitPath.setAttribute('d',
         'M '+cx+','+cy+' m -'+r.toFixed(2)+',0'
@@ -1684,10 +1682,10 @@
       );
     }
 
-    // Deux rAF pour s'assurer que les polices sont chargées
-    requestAnimationFrame(function() { requestAnimationFrame(fitOrbit); });
-    // Recalcule aussi après chargement complet (polices web)
-    window.addEventListener('load', fitOrbit);
+    // Attendre que DM Sans soit chargée avant de mesurer
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(function() {
+      requestAnimationFrame(function() { requestAnimationFrame(fitOrbit); });
+    });
   })();
 
   // ── Reviews carousel : reprise auto après touch sur mobile
