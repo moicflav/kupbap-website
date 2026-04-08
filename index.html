@@ -52,6 +52,12 @@
     #navbar {
       position: fixed; top: 1.8rem; left: 0; right: 0; z-index: 100;
       padding: 0 2rem;
+      transition: opacity 0.4s ease;
+    }
+    /* Sur mobile : navbar cachée au départ, apparaît après l'animation logo */
+    @media (max-width: 768px) {
+      #navbar.logo-animating { opacity: 0; pointer-events: none; }
+      #navbar.logo-arrived   { opacity: 1; pointer-events: auto; }
     }
     .nav-inner {
       max-width: 1200px; margin: 0 auto;
@@ -176,7 +182,7 @@
 
     /* ── HERO LOGO CENTRÉ ── */
     .hero-logo-center {
-      position: absolute; inset: 0; z-index: 99;
+      position: absolute; inset: 0; z-index: 101;
       display: flex; align-items: center; justify-content: center;
       pointer-events: none;
     }
@@ -1360,10 +1366,16 @@
         heroLogoCenter.style.display = 'none';
         navLogoFly.style.opacity = '0';
         navbarLogo.classList.add('visible');
+        // Navbar apparaît en fondu après que le logo soit arrivé
+        navbar.classList.remove('logo-animating');
+        navbar.classList.add('logo-arrived');
       } else {
         heroLogoCenter.style.display = 'flex';
         navbarLogo.classList.remove('visible');
         navLogoFly.style.opacity = '0';
+        // Navbar cachée pendant l'animation
+        navbar.classList.add('logo-animating');
+        navbar.classList.remove('logo-arrived');
 
         // Translation : depuis le centre du logo hero vers le centre du logo navbar
         // heroStart et navDest sont mesurés SANS transformation (voir measureLogos)
