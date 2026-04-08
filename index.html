@@ -176,7 +176,7 @@
 
     /* ── HERO LOGO CENTRÉ ── */
     .hero-logo-center {
-      position: absolute; inset: 0; z-index: 101;
+      position: absolute; inset: 0; z-index: 99;
       display: flex; align-items: center; justify-content: center;
       pointer-events: none;
     }
@@ -1356,28 +1356,22 @@
 
     if (isMobile()) {
       // ── MOBILE : logo glisse directement du centre vers la navbar
-      navLogoFly.style.opacity = '0';
-
       if (raw >= 1) {
         heroLogoCenter.style.display = 'none';
-        heroLogoCenter.style.opacity = '0';
+        navLogoFly.style.opacity = '0';
         navbarLogo.classList.add('visible');
       } else {
         heroLogoCenter.style.display = 'flex';
         navbarLogo.classList.remove('visible');
+        navLogoFly.style.opacity = '0';
 
+        // Translation : depuis le centre du logo hero vers le centre du logo navbar
+        // heroStart et navDest sont mesurés SANS transformation (voir measureLogos)
         const tx = (navDest.x - heroStart.x) * p;
         const ty = (navDest.y - heroStart.y) * p;
         const scale = 1 - p * (1 - targetScale);
-        heroLogoCenter.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
 
-        // Fondu sur les derniers 20% — évite le snap brutal
-        const fadeOut = clamp01((raw - 0.80) / 0.20);
-        heroLogoCenter.style.opacity = String(1 - fadeOut);
-        // Navbar logo apparaît en miroir
-        navbarLogoImg.style.opacity = String(fadeOut);
-        if (raw >= 0.80) navbarLogo.classList.add('visible');
-        else { navbarLogo.classList.remove('visible'); navbarLogoImg.style.opacity = '0'; }
+        heroLogoCenter.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
 
         const sh = 1 - p;
         heroLogoImg.style.filter = `drop-shadow(0 ${8*sh}px ${32*sh}px rgba(0,0,0,${0.45*sh}))`;
