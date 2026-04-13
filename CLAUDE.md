@@ -96,8 +96,20 @@ Règles :
 - Ne jamais modifier la navbar ou le footer d'une seule page sans mettre les autres à jour dans le même échange
 - Pages actives : `index.html`, `menu.html`, `contact.html` (3 pages — `notre-histoire.html` supprimée)
 
-## Déploiement (à venir)
-- **Hébergement cible : Vercel** (statique, gratuit, HTTPS, CDN mondial)
-- **Workflow :** push GitHub → déploiement automatique Vercel
-- **Domaine :** `kupbap.fr` (DNS à pointer vers Vercel)
-- Avant le premier push : renommer les fichiers avec espaces/accents, convertir les images en WebP, retirer `serve.mjs`
+## Déploiement
+- **Hébergement : Vercel** (statique, gratuit, HTTPS, CDN mondial)
+- **Domaine :** `kupbap.fr` (DNS pointés vers Vercel)
+- **Branche de production : `main`** — chaque push sur `main` déclenche un déploiement automatique en production
+
+## Workflow de modification (après mise en ligne)
+- **Toujours travailler sur la branche `dev`**, jamais directement sur `main`
+- Vercel génère automatiquement une URL de prévisualisation pour chaque push sur `dev` (ex: `kupbap-dev.vercel.app`)
+- Flavien valide visuellement sur l'URL de prévisualisation
+- Une fois validé : merge `dev` → `main` → déploiement en production
+- **Exception :** si Flavien demande explicitement un déploiement direct en production, on peut pusher sur `main` directement
+
+## Checklist avant premier déploiement Vercel
+- [ ] Supprimer anciens dossiers `Menu-ete-2026-francais/` et `Menu-ete-2026-anglais/`
+- [ ] Convertir images PNG de `images_menu/` en WebP
+- [ ] Renommer fichiers avec espaces/accents (ex: `Logo-Kupbap-1 (1).png`)
+- [ ] Retirer `serve.mjs` du repo
