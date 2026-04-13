@@ -15,10 +15,14 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Menu — KUPBAP | Restaurant coréen Puteaux">
+  <meta name="twitter:description" content="Découvrez le menu KUPBAP : cupbap à composer, poulet frit coréen, créations du chef, barbecue coréen, desserts.">
   <meta name="twitter:image" content="https://www.kupbap.fr/Kupbap_brand_assets/og-image.jpg">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.kupbap.fr/menu">
   <link rel="icon" type="image/png" href="Kupbap_brand_assets/Logo-Kupbap-1.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Restaurant","name":"KUPBAP","description":"Restaurant coréen fast-casual à Puteaux (92)","url":"https://www.kupbap.fr","address":{"@type":"PostalAddress","streetAddress":"45 rue Roque de Fillol","addressLocality":"Puteaux","postalCode":"92800","addressCountry":"FR"},"telephone":"+33140850384","servesCuisine":"Korean","priceRange":"€€","hasMenu":"https://www.kupbap.fr/menu"}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <style>
     @font-face { font-family: 'Intro Rust'; src: url('Kupbap_brand_assets/Fonts/IntroRust.woff2') format('woff2'); font-weight: normal; font-display: swap; }
@@ -27,7 +31,7 @@
   </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="tailwind.css">
   <style>
     :root { --blue:#12448E; --red:#FF3131; --cream:#F8F4E3; --gold:#E8A317; --dark:#1A1A2E; --gray:#9A9A9A; }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -254,7 +258,7 @@
   <a href="index.html" class="mobile-link" onclick="toggleMenu()">Accueil</a>
   <a href="menu.html" class="mobile-link" onclick="toggleMenu()">Menu</a>
   <a href="contact.html" class="mobile-link" onclick="toggleMenu()">Contact</a>
-  <a href="https://go.obypay.com/api/cashless/hws/4sv3" target="_blank" class="mobile-link" style="color:var(--red);">Commander →</a>
+  <a href="https://go.obypay.com/api/cashless/hws/4sv3" target="_blank" rel="noopener noreferrer" class="mobile-link" style="color:var(--red);">Commander →</a>
 </div>
 
 <!-- PAGE HEADER -->
